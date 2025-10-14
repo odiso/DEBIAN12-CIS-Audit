@@ -76,6 +76,8 @@ gossfile:
   section_7/cis_7.*/*.yml: {}
   {{ end }}
 
+  section_8/*/*.yml: {}
+
 # Metadata
 command:
   benchmark_meta:
