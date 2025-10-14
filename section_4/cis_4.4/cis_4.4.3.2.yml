@@ -4,11 +4,11 @@
   {{ if .Vars.deb12cis_rule_4_4_3_2 }}
 command:
   ipt6_loopback:
-    title: 4.4.3.2 | Ensure ip6tables loopback traffic is configured | Manual
-    exec: echo "Manual - Please confirm ip6tables loopback connections are configured and matched site policy"
+    title: 4.4.3.2 | Ensure ip6tables loopback traffic is configured
+    exec: ping6 -c 1 ::1 && (ip6tables -nL INPUT -v; ip6tables -nL OUTPUT -v) | awk '/lo/ && NR<=40 {pkts+=$1; bytes+=$2} END {if(pkts>0 && bytes>0) print "lo has traffic"; else print "lo NO traffic"}'
     exit-status: 0
     stdout:
-    - '!/^Manual/'
+    - '/^lo has traffic/'
     meta:
       server: 1
       workstation: 1
