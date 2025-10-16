@@ -1,0 +1,23 @@
+---
+
+{{ if .Vars.deb12cis_level_1 }}
+file:
+  etc_passwd_perms:
+    title: 8.2.2.4 | Rotate Tokens Regularly
+    exec: error_found=0; while IFS=: read -r _ token_full expire rest; do if [ -z "$expire" ] || [ "$expire" = "0" ]; then echo "KO: token $token_full has no expiration date set" >&2; error_found=1; continue; fi; threshold=$(($(date +%s) + 31536000)); if [ "$expire" -le "$threshold" ]; then days=$(( ($expire - $(date +%s)) / 86400 )); echo "KO: token $token_full expires on $(date -d @$expire +%Y-%m-%d) (in $days days)" >&2; error_found=1; fi; done < <(grep '^token:' /etc/pve/user.cfg);
+    exit-status: 0
+    stdout:
+    - '!/^KO/'
+    meta:
+      server: 1
+      workstation: 1
+      CIS_ID:
+      - 8.2.2.4
+      CISv8: 3.3
+      CISv8_IG1: true
+      CISv8_IG2: true
+      CISv8_IG3: true
+      NIST800-53R5:
+      - AC-3
+      - MP-2
+{{ end }}
