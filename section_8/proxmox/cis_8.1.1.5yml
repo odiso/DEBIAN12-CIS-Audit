@@ -1,0 +1,23 @@
+---
+
+{{ if .Vars.deb12cis_level_1 }}
+file:
+  etc_passwd_perms:
+    title: 8.1.1.5 | Enable Full-Disk Encryption
+    exec: pvs --noheadings -o pv_name | while read pv; do dev=$(ls /sys/block/$(basename $(readlink -f $pv))/slaves/ 2>/dev/null | head -1); [ -n "$dev" ] && real_dev="/dev/$dev" || real_dev="$pv"; sudo cryptsetup isLuks $real_dev 2>/dev/null && echo "LUKS: $real_dev" || echo "not LUKS: $real_dev"; done
+    exit-status: 0
+    stdout:
+    - '!/^not LUKS/'
+    meta:
+      server: 1
+      workstation: 1
+      CIS_ID:
+      - 8.1.1.5
+      CISv8: 3.3
+      CISv8_IG1: true
+      CISv8_IG2: true
+      CISv8_IG3: true
+      NIST800-53R5:
+      - AC-3
+      - MP-2
+{{ end }}
