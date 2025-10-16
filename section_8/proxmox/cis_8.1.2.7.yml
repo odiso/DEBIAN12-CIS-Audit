@@ -1,8 +1,8 @@
 ---
 
 {{ if .Vars.deb12cis_level_1 }}
-file:
-  etc_passwd_perms:
+command:
+  check_lxc_presence:
     title: 8.1.2.7 | Avoid LXC - Run Container Platforms Inside VMs
     exec: [ -f /etc/pve/lxc/*.conf ] && echo "KO. at least 1 LXC container exist"
     exit-status: 1

@@ -1,8 +1,8 @@
 ---
 
 {{ if .Vars.deb12cis_level_1 }}
-file:
-  etc_passwd_perms:
+command:
+  check_kernel_lockdown:
     title: 8.1.2.1.1 | Kernel Lockdown (Integrity Mode)
     exec: cat /sys/kernel/security/lockdown | grep -q '\[integrity\]'
     exit-status: 0

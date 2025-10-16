@@ -1,8 +1,8 @@
 ---
 
 {{ if .Vars.deb12cis_level_1 }}
-file:
-  etc_passwd_perms:
+command:
+  check_debian_repo:
     title: 8.1.1.7 | Enable Debian "non-free-firmware" repositories
     exec: apt update 2>&1 | tee /tmp/apt-update.log >/dev/null; for s in "bookworm main contrib non-free-firmware" "bookworm-updates main contrib non-free-firmware" "bookworm-security main contrib non-free-firmware"; do codename=$(echo $s | awk '{print $1}'); if grep -q "$codename" /tmp/apt-update.log; then echo "OK:      $s"; else echo "MISSING: $s"; fi; done
     exit-status: 0
