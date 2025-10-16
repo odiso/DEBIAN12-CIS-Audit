@@ -1,0 +1,21 @@
+---
+
+{{ if .Vars.deb12cis_level_1 }}
+command:
+  check_corosync:
+    title: 8.3.1 | Provide Redundant Corosync Links
+    exec: out=$(corosync-cmapctl) && id=$(awk '/nodelist.local_node_pos \(u32\)/{print $NF}' <<<"$out") && [ -n "$id" ] && printf '%s\n' "$out" | grep -Fq "nodelist.node.${id}.ring0_addr (str)" && printf '%s\n' "$out" | grep -Fq "nodelist.node.${id}.ring2_addr (str)"
+    exit-status: 0
+    meta:
+      server: 1
+      workstation: 1
+      CIS_ID:
+      - 8.3.1
+      CISv8: 3.3
+      CISv8_IG1: true
+      CISv8_IG2: true
+      CISv8_IG3: true
+      NIST800-53R5:
+      - AC-3
+      - MP-2
+{{ end }}
