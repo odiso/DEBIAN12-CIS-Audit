@@ -1,0 +1,24 @@
+---
+
+{{ if .Vars.deb12cis_level_1 }}
+file:
+  etc_passwd_perms:
+    title: 8.1.1.7 | Enable Debian "non-free-firmware" repositories
+    exec: apt update 2>&1 | tee /tmp/apt-update.log >/dev/null; for s in "bookworm main contrib non-free-firmware" "bookworm-updates main contrib non-free-firmware" "bookworm-security main contrib non-free-firmware"; do codename=$(echo $s | awk '{print $1}'); if grep -q "$codename" /tmp/apt-update.log; then echo "OK:      $s"; else echo "MISSING: $s"; fi; done
+    exit-status: 0
+    stdout:
+    - '!/^OK/'
+    - '!/^MISSING/'
+    meta:
+      server: 1
+      workstation: 1
+      CIS_ID:
+      - 8.1.1.7
+      CISv8: 3.3
+      CISv8_IG1: true
+      CISv8_IG2: true
+      CISv8_IG3: true
+      NIST800-53R5:
+      - AC-3
+      - MP-2
+{{ end }}
