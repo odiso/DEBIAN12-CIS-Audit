@@ -1,0 +1,24 @@
+{{ if .Vars.deb12cis_level_1 }}
+command:
+  apt_automatic_security_updates:
+    title: "8.1.3"
+    exec: "grep -q 'APT::Periodic::AutocleanInterval \"7\";' /etc/apt/apt.conf.d/20auto-upgrades && grep -q 'APT::Periodic::Update-Package-Lists \"1\";' /etc/apt/apt.conf.d/20auto-upgrades && grep -q 'APT::Periodic::Unattended-Upgrade \"1\";' /etc/apt/apt.conf.d/20auto-upgrades && grep -q 'Unattended-Upgrade::Origins-Pattern' /etc/apt/apt.conf.d/50unattended-upgrades && grep -q 'Remove-Unused-Dependencies \"true\";' /etc/apt/apt.conf.d/50unattended-upgrades && grep -q 'Automatic-Reboot \"false\";' /etc/apt/apt.conf.d/50unattended-upgrades && systemctl is-enabled unattended-upgrades --quiet"
+    exit-status: 0
+    stdout:
+    - '!/./'
+    meta:
+      server: 1
+      workstation: 1
+      CIS_ID:
+      - 8.1.3
+      CISv8: 4.1
+      CISv8_IG1: true
+      CISv8_IG2: true
+      CISv8_IG3: true
+      NIST800-53R5:
+      - CM-1
+      - CM-2
+      - CM-6
+      - CM-7
+      - IA-5
+{{ end }}
