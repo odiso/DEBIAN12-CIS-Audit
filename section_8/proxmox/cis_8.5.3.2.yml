@@ -1,0 +1,24 @@
+---
+
+{{ if .Vars.deb12cis_level_1 }}
+command:
+  check_rkhunter:
+    title: "8.5.3.2 | Detects known rootkits in userland and kernel space"
+    exec: '[[ -f /usr/bin/rkhunter && -f /etc/cron.daily/rkhunter ]] && echo "OK" || echo "KO"'
+    exit-status: 0
+    stdout:
+    - '/^OK/'
+    - '!/^KO/'
+    meta:
+      server: 1
+      workstation: 1
+      CIS_ID:
+      - 8.5.3.2
+      CISv8: 3.3
+      CISv8_IG1: true
+      CISv8_IG2: true
+      CISv8_IG3: true
+      NIST800-53R5:
+      - AC-3
+      - MP-2
+{{ end }}
