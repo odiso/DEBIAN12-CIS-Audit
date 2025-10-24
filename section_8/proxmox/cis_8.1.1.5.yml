@@ -4,7 +4,7 @@
 command:
   check_disk_encryption:
     title: 8.1.1.5 | Enable Full-Disk Encryption
-    exec: pvs --noheadings -o pv_name | while read pv; do dev=$(ls /sys/block/$(basename $(readlink -f $pv))/slaves/ 2>/dev/null | head -1); [ -n "$dev" ] && real_dev="/dev/$dev" || real_dev="$pv"; sudo cryptsetup isLuks $real_dev 2>/dev/null && echo "LUKS: $real_dev" || echo "not LUKS: $real_dev"; done
+    exec: 'pvs --noheadings -o pv_name | while read pv; do dev=$(ls /sys/block/$(basename $(readlink -f $pv))/slaves/ 2>/dev/null | head -1); [ -n "$dev" ] && real_dev="/dev/$dev" || real_dev="$pv"; sudo cryptsetup isLuks $real_dev 2>/dev/null && echo "LUKS: $real_dev" || echo "not LUKS: $real_dev"; done'
     exit-status: 0
     stdout:
     - '!/^not LUKS/'

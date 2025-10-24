@@ -4,7 +4,7 @@
 command:
   check_lxc_presence:
     title: 8.1.2.7 | Avoid LXC - Run Container Platforms Inside VMs
-    exec: [ -f /etc/pve/lxc/*.conf ] && echo "KO. at least 1 LXC container exist"
+    exec: "[ -f /etc/pve/lxc/*.conf ] && echo 'KO. at least 1 LXC container exist'"
     exit-status: 1
     stdout:
     - '!/^KO/'

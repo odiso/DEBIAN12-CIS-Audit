@@ -2,9 +2,9 @@
 
 {{ if .Vars.deb12cis_level_1 }}
 command:
-  check_corosync:
+  check_corosync_totem:
     title: 8.3.2 | Secure Inter-Node Communication
-    exec: corosync-cmapctl | grep -q "totem.secauth (str) = on"
+    exec: "corosync-cmapctl | grep -q 'totem.secauth (str) = on'"
     exit-status: 0
     meta:
       server: 1
