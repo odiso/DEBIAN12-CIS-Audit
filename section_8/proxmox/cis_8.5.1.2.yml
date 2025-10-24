@@ -3,7 +3,7 @@
 {{ if .Vars.deb12cis_level_1 }}
 command:
   check_proxmox_auditd:
-    title: 8.5.1.2 | Secure Inter-Node Communication
+    title: 8.5.1.2 | Auditd for /etc/pve
     exec: "auditctl -l | grep pve-config"
     exit-status: 0
     meta:
