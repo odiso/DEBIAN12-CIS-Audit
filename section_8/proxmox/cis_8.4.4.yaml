@@ -1,0 +1,24 @@
+---
+
+{{ if .Vars.deb12cis_level_1 }}
+command:
+  check_pbs_encrypt:
+    title: 8.4.4 | Encrypt Backups
+    exec: "perl -lne 'if(/^pbs:\s+(\S+)/){$n=$1;$k=0} elsif(/^\s+encryption-key/){$k=1} elsif(/^(\s*$|[a-z])/ && $n){print(($k?\"OK:\":\"KO:\").$n);$n=\"\"}' /etc/pve/storage.cfg"
+    exit-status: 0
+    stdout:
+    - '/^OK/'
+    - '!/^KO/'
+    meta:
+      server: 1
+      workstation: 1
+      CIS_ID:
+      - 8.4.4
+      CISv8: 3.3
+      CISv8_IG1: true
+      CISv8_IG2: true
+      CISv8_IG3: true
+      NIST800-53R5:
+      - AC-3
+      - MP-2
+{{ end }}
