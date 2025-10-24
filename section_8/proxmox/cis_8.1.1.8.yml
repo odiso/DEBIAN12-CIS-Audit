@@ -1,0 +1,21 @@
+---
+
+{{ if .Vars.deb12cis_level_1 }}
+command:
+  check_corosync:
+    title: 8.1.1.8 | Check non-free firmware repo configured and microcode installed
+    exec: "grep -E \"non-free(-firmware)?\" /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null | grep -Eq 'main.*non-free' && dpkg -l intel-microcode amd64-microcode 2>/dev/null | grep -Eq '^ii' && echo \"✅ Dépôts non-free + microcode OK\" || echo \"❌ Vérification échouée\""
+    exit-status: 0
+    meta:
+      server: 1
+      workstation: 1
+      CIS_ID:
+      - 8.1.1.8
+      CISv8: 3.3
+      CISv8_IG1: true
+      CISv8_IG2: true
+      CISv8_IG3: true
+      NIST800-53R5:
+      - AC-3
+      - MP-2
+{{ end }}

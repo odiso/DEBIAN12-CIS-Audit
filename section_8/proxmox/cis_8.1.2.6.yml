@@ -1,0 +1,22 @@
+---
+
+{{ if .Vars.deb12cis_level_1 }}
+command:
+  check_ksm_disabled:
+    title: 8.1.2.6 | Check KSM is disabled
+    exec: "[ "$(cat /sys/kernel/mm/ksm/run 2>/dev/null)" = "0" ]"
+
+    exit-status: 0
+    meta:
+      server: 1
+      workstation: 1
+      CIS_ID:
+      - 8.1.2.6
+      CISv8: 3.3
+      CISv8_IG1: true
+      CISv8_IG2: true
+      CISv8_IG3: true
+      NIST800-53R5:
+      - AC-3
+      - MP-2
+{{ end }}
