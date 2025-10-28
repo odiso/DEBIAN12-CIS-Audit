@@ -1,7 +1,7 @@
 {{ if .Vars.deb12cis_level_1 }}
 command:
-  audit_ssh_hardening:
-    title: "8.1.1.4.1 | Audit SSH hardening configuration"
+  audit_ssh_hardening_2:
+    title: "8.1.1.4.1 | Audit SSH hardening configuration for user"
     exec: "bash -c \"[ -d ~/.ssh ] && [ \\\"\\\$(stat -c '%a' ~/.ssh)\\\" = \\\"700\\\" ] && [ -f ~/.ssh/config ] && (for key in \\\"Ciphers\\\" \\\"KexAlgorithms\\\" \\\"MACs\\\" \\\"RequiredRSASize\\\" \\\"HostKeyAlgorithms\\\" \\\"CASignatureAlgorithms\\\" \\\"GSSAPIKexAlgorithms\\\" \\\"HostbasedAcceptedAlgorithms\\\" \\\"PubkeyAcceptedAlgorithms\\\"; do grep -q \\\"^[[:space:]]*\\\$key\\\" ~/.ssh/config || { echo \\\"Missing \\$key\\\"; exit 1; }; done) && echo \\\"SSH config OK\\\" || echo \\\"SSH config incomplete or wrong permissions\\\"\""
     exit-status: 0
     meta:
